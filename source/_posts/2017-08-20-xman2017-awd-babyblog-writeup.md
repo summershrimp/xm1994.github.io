@@ -4,11 +4,14 @@ title: 'XMan2017夏令营结业攻防赛Babyblog出题思路 & WriteUP'
 date: 2017-08-20T23:21:31+08:00
 author: xm1994
 layout: post
-guid: https://www.summershrimp.com/?p=116
 permalink: /2017/08/xman2017-awd-babyblog-writeup/
 categories:
   - Web
 ---
+
+出题人WP！总之就是很水了。
+
+<!--more-->
 
 ## 0x00 出题思路 
 

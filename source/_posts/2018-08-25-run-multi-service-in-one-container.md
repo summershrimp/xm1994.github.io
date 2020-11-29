@@ -4,12 +4,14 @@ title: 如何科学的在Docker Container中运行多个服务
 date: 2018-08-25T21:29:15+08:00
 author: xm1994
 layout: post
-guid: https://www.summershrimp.com/?p=129
 permalink: /2018/08/run-multi-service-in-one-container/
 categories:
   - 未分类
 ---
+
 在一个Docker Container中运行多个服务？打扰了。
+<!--more-->
+
 
 ## 0x00 前言
 

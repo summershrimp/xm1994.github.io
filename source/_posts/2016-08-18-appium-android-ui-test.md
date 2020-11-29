@@ -4,12 +4,16 @@ title: Appium在Android UI测试中的应用
 date: 2016-08-18T23:29:08+08:00
 author: xm1994
 layout: post
-guid:     /?p=99
 permalink: /2016/08/appium-android-ui-test/
 categories:
   - Fun
   - 开发向
 ---
+
+安卓app自动化e2e测试，试试appium把！
+
+<!--more-->
+
 ## Android测试工具与Appium简介
 
 Appium是一个C/S架构的，支持Android/iOS Native, Hybrid 和 Mobile Web Apps的测试框架，与测试程序通过Selenum Webdriver协议通讯。Webdriver的好处是通过HTTP RPC的方式调用Server上的过程，编写测试脚本不受语言的限制，无论是Python, Java, NodeJS均可以方便的编写测试。本文中将使用Python进行编程。

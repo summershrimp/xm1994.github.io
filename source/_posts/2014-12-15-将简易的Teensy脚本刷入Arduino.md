@@ -4,13 +4,15 @@ title: 将简易的Teensy脚本刷入Arduino
 date: 2014-12-15T17:55:55+08:00
 author: xm1994
 layout: post
-guid: http://www.summershrimp.com/?p=39
-permalink: '/2014/12/%e5%b0%86%e7%ae%80%e6%98%93%e7%9a%84teensy%e8%84%9a%e6%9c%ac%e5%88%b7%e5%85%a5arduino/'
-duoshuo_thread_id:
-  - "1182844713556770819"
+permalink: '/2014/12/teensy-on-arduino/'
 categories:
   - 社会工程
 ---
+
+BadUSB！ 只需要十几块钱。
+
+<!--more-->
+
 首先，你需要有个Arduino Leonardo或者SparkFun Pro Micro
 
 ![](/wp-content/uploads/2014/12/pro-micro1.png)

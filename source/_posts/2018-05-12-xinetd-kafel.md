@@ -4,12 +4,17 @@ title: 'xinetd-kafel - 一个更安全的xinetd服务'
 date: 2018-05-12T21:26:27+08:00
 author: xm1994
 layout: post
-guid: https://www.summershrimp.com/?p=125
 permalink: /2018/05/xinetd-kafel/
 categories:
   - Server-Side
   - Windows/Linux
 ---
+
+求求你们，别搅屎了。通防有啥好玩的？
+
+<!--more-->
+
+
 为了保证CTF解题/渗透赛中PWN服务有更稳定的表现（预防搅屎棍）和CTF攻防赛中有人使用ptrace/seccomp等系统调用做通用防御，我在xinetd中加入了对syscall的过滤。感谢Google的Kafel项目，给编写seccomp bpf代码提供了一种更方便的方法。
 
 ## 0x00 前言：为啥要搞这个东西？

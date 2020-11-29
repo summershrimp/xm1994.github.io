@@ -4,11 +4,14 @@ title: HttpLuaModule在Coding WebIDE中的应用
 date: 2015-11-03T10:57:01+08:00
 author: xm1994
 layout: post
-guid: https://www.summershrimp.com/?p=84
-permalink: '/2015/11/httpluamodule%e5%9c%a8coding-webide%e4%b8%ad%e7%9a%84%e5%ba%94%e7%94%a8/'
+permalink: '/2015/11/httpluamodule-on-coding-webide/'
 categories:
   - Web Backend
 ---
+
+实现复杂的负载均衡逻辑，选OpenResty就对了！
+
+<!--more-->
 
 ## 0x00 前言
 
