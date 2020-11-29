@@ -4,7 +4,7 @@ title: Appium在Android UI测试中的应用
 date: 2016-08-18T23:29:08+08:00
 author: xm1994
 layout: post
-guid: https://www.summershrimp.com/?p=99
+guid:     /?p=99
 permalink: /2016/08/appium-android-ui-test/
 categories:
   - Fun
@@ -16,35 +16,42 @@ Appium是一个C/S架构的，支持Android/iOS Native, Hybrid 和 Mobile Web Ap
 
 起因是因为市场部的同事抛来如下需求：批量添加一些微信好友。直接抓取请求进行重放的方法是不靠谱的，微信与服务端的通讯均加密，Pass。考虑使用xposed等框架hook相关函数进行操作。但是xposed需要越狱，且开发复杂，Pass。后来想到了使用UI测试工具进行模拟操作，开发较为简单。
 
-Android UI测试工具有很多种，如Monkey, UIAutomator, Selendroid, Robotium等。其中UIAutomator, Monkey, Selendroid均为非侵入式的UI测试，也就是不需要修改源代码，只要安装了目标程序就可以进行测试。Robotium需要与源码一同编译测试。Appium实际上就是一个测试工具的统一调度软件，将不同的非侵入式测试工具整合在一起，对外提供统一的API。在Android 2.3以前的版本，Appium会调用Selendroid，之后的版本会直接使用UIAutomator，iOS下使用UIAutomation。Appium还支持FirefoxOS的UI测试。<figure style="width: 347px" class="wp-caption alignnone">
+Android UI测试工具有很多种，如Monkey, UIAutomator, Selendroid, Robotium等。其中UIAutomator, Monkey, Selendroid均为非侵入式的UI测试，也就是不需要修改源代码，只要安装了目标程序就可以进行测试。Robotium需要与源码一同编译测试。Appium实际上就是一个测试工具的统一调度软件，将不同的非侵入式测试工具整合在一起，对外提供统一的API。在Android 2.3以前的版本，Appium会调用Selendroid，之后的版本会直接使用UIAutomator，iOS下使用UIAutomation。Appium还支持FirefoxOS的UI测试。
 
-<img class="" src="https://dn-summershrimp-my-blog.qbox.me/appium.gif" width="347" height="614" /> <figcaption class="wp-caption-text">Appium Gif</figcaption></figure> 
+![Appium Gif](http://cdn-qn.summershrimp.com/appium.gif)
 
 ## 安装Appium
 
 官网给出了命令行下的安装方法。但实际上Appium有GUI版本，更适合在Windows/MacOS下使用。Windows下需要安装.NET Framework。
 
-<pre class="lang:default decode:true">&gt; brew install node      # get node.js
-&gt; npm install -g appium  # get appium
-&gt; npm install wd         # get appium client
-&gt; appium &               # start appium
-&gt; node your-appium-test.js</pre>
+```shell
+brew install node      # get node.js
+npm install -g appium  # get appium
+npm install wd         # get appium client
+appium &               # start appium
+node your-appium-test.js
+```
 
 Appium需要依赖Android SDK编译在手机端运行的两个插件，因此需要首先安装相应的Android SDK版本。这里直接使用了Android Studio中自带的SDK Manager。在SDKManager中选择和测试机相对应的SDK Platform和较新的Build-tools，如果需要使用模拟器测试还要装对应的ARM/x86 System Image，以及Intel HAXM Installer，用于加速x86虚拟机。Appium使用adb来与目标机器通讯，因此对于真机和模拟器操作几乎都是相同的，如何建立模拟器在此不再赘述。
 
 安装完成后需要在Appium GUI中配置Android SDK目录，随后选择Android，点击Launch就可以启动Appium Server。
 
-[<img class="alignnone size-medium wp-image-102" src="https://www.summershrimp.com/wp-content/uploads/2016/08/Appium-android-sdk-280x300.png" alt="Appium-android-sdk" width="280" height="300" srcset="https://www.summershrimp.com/wp-content/uploads/2016/08/Appium-android-sdk-280x300.png 280w, https://www.summershrimp.com/wp-content/uploads/2016/08/Appium-android-sdk-768x823.png 768w, https://www.summershrimp.com/wp-content/uploads/2016/08/Appium-android-sdk-956x1024.png 956w, https://www.summershrimp.com/wp-content/uploads/2016/08/Appium-android-sdk.png 1333w" sizes="(max-width: 280px) 100vw, 280px" />](https://www.summershrimp.com/wp-content/uploads/2016/08/Appium-android-sdk.png)[<img class="alignnone size-medium wp-image-103" src="https://www.summershrimp.com/wp-content/uploads/2016/08/Appium-launch-300x263.png" alt="Appium-launch" width="300" height="263" srcset="https://www.summershrimp.com/wp-content/uploads/2016/08/Appium-launch-300x263.png 300w, https://www.summershrimp.com/wp-content/uploads/2016/08/Appium-launch-768x672.png 768w, https://www.summershrimp.com/wp-content/uploads/2016/08/Appium-launch-1024x896.png 1024w, https://www.summershrimp.com/wp-content/uploads/2016/08/Appium-launch.png 1332w" sizes="(max-width: 300px) 100vw, 300px" />](https://www.summershrimp.com/wp-content/uploads/2016/08/Appium-launch.png)
+![](/wp-content/uploads/2016/08/Appium-android-sdk.png)
+![](/wp-content/uploads/2016/08/Appium-launch.png)
 
 Appium Server默认会监听http://localhost:4723 ，用于RPC通讯。下面我们就可以打开熟悉的编程环境，编写UI测试用例了。这里使用Python进行编写，需要先安装Appium的Python Client  ，然后再python中使用appium.webclient就可以连接Appium server了。
 
-<pre class="lang:default decode:true">pip install Appium-Python-Client</pre>
+```shell
+pip install Appium-Python-Client
+```
+
 
 ## 使用Appium进行UI控制
 
 根据注释修改相应属性后即可运行测试。手机需要打开ADB调试，执行完以下代码后，Appium会在手机上安装Appium Settings和Unlock两个程序，随后微信会被启动。
 
-<pre class="lang:python decode:true">from appium import webdriver
+```python
+from appium import webdriver
 
 desired_caps = {}
 desired_caps['platformName'] = 'Android'  #测试平台
@@ -53,7 +60,7 @@ desired_caps['deviceName'] = 'm3_note'    #设备名称，多设备时需区分
 desired_caps['appPackage'] = 'com.tencent.mm'  #app package名
 desired_caps['appActivity'] = '.ui.LauncherUI' #app默认Activity
 dr = webdriver.Remote('http://localhost:4723/wd/hub', desired_caps) #启动Remote RPC
-</pre>
+```
 
 Selenum Webdriver使用了一种类似于JS中的DOM模型的方法来选择页面中的元素。dr为当前正在活动的activity对象，可以使用findElementByXXX的方法来获取Activity中的元素。所有Element后带s的函数，均获得所有匹配的元素，不带s的函数获得第一个匹配的元素。
 
@@ -67,15 +74,19 @@ Selenum Webdriver使用了一种类似于JS中的DOM模型的方法来选择页�
 
 通过类名来获取元素，用法如下：
 
-<pre class="lang:python decode:true ">item_list = dr.find_elements_by_class_name("android.widget.LinearLayout")
-item_list[2].click()</pre>
+```python
+item_list = dr.find_elements_by_class_name("android.widget.LinearLayout")
+item_list[2].click()
+```
 
 #### 3. findElementById
 
 通过resource_id来获取元素，每个Activity中都是唯一的，用法如下
 
-<pre class="lang:python decode:true">t = dr.find_element_by_id("com.tencent.mm:id/f7")
-t.send_keys(wechatId)</pre>
+```python
+t = dr.find_element_by_id("com.tencent.mm:id/f7")
+t.send_keys(wechatId)
+```
 
 #### 4. findElement(s)ByAccessbiltiyId
 
@@ -85,15 +96,19 @@ t.send_keys(wechatId)</pre>
 
 通过XML Path描述来寻找元素。我没有成功的获取到，可能是XPath写的有问题。
 
-<pre class="lang:python decode:true">s = dr.find_element_by_xpath("//android.widget.TextView[contains(@text,'搜索')]")
-s.click()</pre>
+```python
+s = dr.find_element_by_xpath("//android.widget.TextView[contains(@text,'搜索')]")
+s.click()
+```
 
 #### 6. findElementByAndroidUIAutomator
 
 通过UIAutomator的选择器来获取元素。因为Appium在Android上实际是调用的UIAutomator，所以可以通过UIAutomator的选择器来选择元素。
 
-<pre class="lang:python decode:true ">el = dr.find_element_by_android_ui_automator("new UiSelector().text(\"搜索\")")
-el.click()</pre>
+```python
+el = dr.find_element_by_android_ui_automator("new UiSelector().text(\"搜索\")")
+el.click()
+```
 
 ### 操作函数
 
@@ -105,26 +120,30 @@ el.click()</pre>
 
 查询函数返回的元素对象可以像JS中的dom元素一样，继续使用查询函数来选定其子元素。用例如下。
 
-<pre class="lang:python decode:true">search = dr.find_element_by_id("com.tencent.mm:id/aqw").find_element_by_class_name("android.widget.RelativeLayout")
-search.click()</pre>
+```python
+search = dr.find_element_by_id("com.tencent.mm:id/aqw").find_element_by_class_name("android.widget.RelativeLayout")
+search.click()
+```
 
 ## 如何确定查询规则
 
-了解了相关的函数后，下面就应对UI进行定位了。如果是自己团队开发的程序，推荐让开发同学在所有的空间上都添加resource\_id进行绝对定位。如果碰到没有谈价resource\_id的元素，那就要使用别的办法进行定位了。
+了解了相关的函数后，下面就应对UI进行定位了。如果是自己团队开发的程序，推荐让开发同学在所有的空间上都添加resource_id进行绝对定位。如果碰到没有谈价resource_id的元素，那就要使用别的办法进行定位了。
 
 ### 1. UI Automator Viewer
 
 UI Automator Viewer是Android官方的UI定位工具，位于sdk/tools下。运行后会打开viewer界面。点击获取按钮即可获取当前正在运行的Activity的UI结构。
 
-[<img class="alignnone size-medium wp-image-104" src="https://www.summershrimp.com/wp-content/uploads/2016/08/uiviewer-300x225.png" alt="uiviewer" width="300" height="225" srcset="https://www.summershrimp.com/wp-content/uploads/2016/08/uiviewer-300x225.png 300w, https://www.summershrimp.com/wp-content/uploads/2016/08/uiviewer-768x576.png 768w, https://www.summershrimp.com/wp-content/uploads/2016/08/uiviewer-1024x768.png 1024w, https://www.summershrimp.com/wp-content/uploads/2016/08/uiviewer.png 1600w" sizes="(max-width: 300px) 100vw, 300px" />](https://www.summershrimp.com/wp-content/uploads/2016/08/uiviewer.png)
+![](/wp-content/uploads/2016/08/uiviewer.png)
 
 ### 2. AppiumDriver getPageSource
 
 AppiumDriver(Client) 可以很方便的获得当前正在运行的Activity的UI描述，随后可根据返回的XML文档来寻找元素。
 
-<pre class="lang:python decode:true">print dr.page_source</pre>
+```python
+print dr.page_source
+```
 
-[<img class="alignnone size-medium wp-image-108" src="https://www.summershrimp.com/wp-content/uploads/2016/08/2014100408573062-300x178.jpg" alt="getSource" width="300" height="178" srcset="https://www.summershrimp.com/wp-content/uploads/2016/08/2014100408573062-300x178.jpg 300w, https://www.summershrimp.com/wp-content/uploads/2016/08/2014100408573062-768x456.jpg 768w, https://www.summershrimp.com/wp-content/uploads/2016/08/2014100408573062-1024x608.jpg 1024w, https://www.summershrimp.com/wp-content/uploads/2016/08/2014100408573062.jpg 1261w" sizes="(max-width: 300px) 100vw, 300px" />](https://www.summershrimp.com/wp-content/uploads/2016/08/2014100408573062.jpg)
+![](/wp-content/uploads/2016/08/2014100408573062.jpg)
 
 (图片与他人，侵删)
 
@@ -136,7 +155,8 @@ AppiumDriver(Client) 可以很方便的获得当前正在运行的Activity的UI�
 
 这里我使用Appium主要是为了模拟用户点击添加微信好友，所以完整的程序并没有使用到测试框架。相关的UI元素获取/操作方法供大家参考。
 
-<pre class="lang:python decode:true "># coding:utf-8
+```python
+# coding:utf-8
 from appium import webdriver
 from time import sleep
 
@@ -238,6 +258,5 @@ print "\n".join(succ_list)
 print "Failed List:"
 print "\n".join(fail_list)
 
-dr.close()</pre>
-
-&nbsp;
+dr.close()
+```
