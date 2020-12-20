@@ -1,0 +1,41 @@
+name: CI
+on:
+  push:
+    branches:
+      - hexo
+  pull_request:
+    branches:
+      - hexo
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout source
+        uses: actions/checkout@v2
+      - name: Use Node.js 12
+        uses: actions/setup-node@v2
+        with:
+          version: 12
+      - name: Setup hexo
+        run: |
+          git config user.email "xm1994@gmail.com"
+          git config user.name "Yibai Zhang"
+          npm install
+      - name: Cache node modules
+        uses: actions/cache@v2
+        env:
+          cache-name: cache-node-modules
+        with:
+          path: node_modules
+          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-build-${{ env.cache-name }}-
+      - name: Hexo generate
+        run: |
+          npm run clean
+          npm run build
+      - name: Hexo deploy
+        if: ${{ github.event_name == 'push' }}
+        run: |
+          npm run deploy
