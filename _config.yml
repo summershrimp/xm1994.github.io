@@ -104,6 +104,11 @@ theme: landscape
 # Deployment
 ## Docs: https://hexo.io/docs/one-command-deployment
 deploy:
-  type: 'git'
+- type: 'git'
   repo: git@github.com:summershrimp/summershrimp.github.io.git
   branch: master
+- type: 'sftp'
+  host: summershrimp.com
+  user: hexo-deployer
+  pass: sftp-password-placeholder
+  remotePath: /opt/hexo-blog
