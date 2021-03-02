@@ -112,3 +112,19 @@ deploy:
   user: hexo-deployer
   pass: sftp-password-placeholder
   remotePath: /opt/hexo-blog
+
+gitalk:
+  enable: true
+  clientID: c52007e74a2d1a984cf2
+  clientSecret: 7b7b53b4b0bb4bb59c137824b316b351d2305edc
+  repo: summershrimp.github.io
+  owner: summershrimp
+  admin:
+    - summershrimp
+  labels:
+    - gitalk
+  perPage: 10
+  pagerDirection: last
+  createIssueManually: true
+  distractionFreeMode: false
+  proxy: https://cors.xm1994.workers.dev/?https://github.com/login/oauth/access_token
